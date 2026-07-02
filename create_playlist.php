@@ -74,24 +74,40 @@ function fetchMovies($playVodUrl, $language, $apiKey, $totalPages)
 // Function to fetch and handle errors for a URL
 function fetchAndHandleErrors($url, $errorMessage)
 {
-    try {
-        $response = file_get_contents($url);
+    $ch = curl_init($url);
 
-        if ($response !== false) {
-            $data = json_decode($response, true);
-            if ($data !== null) {
-                return $data;
-            } else {
-                error_log($errorMessage . ' Invalid JSON format');
-            }
-        } else {
-            error_log($errorMessage . ' Request failed');
-        }
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_CONNECTTIMEOUT => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_USERAGENT => 'TMDB-To-VOD-Playlist',
+    ]);
+
+    $response = curl_exec($ch);
+
+    if ($response === false) {
+        error_log($errorMessage . ' cURL Error: ' . curl_error($ch));
+        curl_close($ch);
+        return null;
     }
-    catch (exception $error) {
-        error_log($errorMessage . ' ' . $error->getMessage());
+
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    if ($httpCode !== 200) {
+        error_log($errorMessage . " HTTP $httpCode");
+        return null;
     }
-    return null;
+
+    $data = json_decode($response, true);
+
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        error_log($errorMessage . ' Invalid JSON');
+        return null;
+    }
+
+    return $data;
 }
 
 // Fetch now playing movies
