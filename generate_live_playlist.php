@@ -14,8 +14,7 @@ function runLivePlaylistGenerate() {
 
     $include = filter_var($INCLUDE_ADULT_VOD ?? false, FILTER_VALIDATE_BOOLEAN);
 
-    $playlistUrl = $include
-        ? '$playlistUrl = 'https://raw.githubusercontent.com/gogetta69/public-files/main/Pluto-TV/us.m3u8';
+    $playlistUrl = 'https://raw.githubusercontent.com/gogetta69/public-files/main/Pluto-TV/us.m3u8';
 
     $categoriesFile = __DIR__ . "/channels/get_live_categories.json";
 
