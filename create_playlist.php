@@ -63,12 +63,13 @@ function fetchMovies($playVodUrl, $language, $apiKey, $totalPages)
     measureExecutionTime('fetchGenres', $playVodUrl, $language, $apiKey, $totalPages);
 
     //Save the Json and M3U8 Data
-    echo "<br>About to write playlist...<br>";
-flush();
+    $result = file_put_contents('playlist.m3u8', $outputContent);
 
-// file_put_contents('playlist.m3u8', $outputContent);
+if ($result === false) {
+    die("FAILED TO WRITE PLAYLIST");
+}
 
-echo "Skipped writing playlist.<br>";
+echo "Wrote $result bytes successfully.";
 exit;
 
     file_put_contents('playlist.json', json_encode($outputData));
