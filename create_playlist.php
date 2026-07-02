@@ -276,6 +276,8 @@ function fetchMoviesByGenre($genreId, $genreName, $playVodUrl, $language, $apiKe
 	$capturedTotalPages = null;
 
     for ($page = 1; $page <= $totalPages; $page++) {
+        echo "Genre: $genreName | Page: $page<br>";
+flush();
         $url = $baseUrl . "?api_key=$apiKey&include_adult=false&with_runtime.gte=$minRuntime&with_origin_country=$movies_with_origin_country&language=$language&with_genres=$genreId&page=$page";
         $data = fetchAndHandleErrors($url, "Request for $genreName movies failed.");
 		
