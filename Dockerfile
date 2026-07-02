@@ -1,6 +1,8 @@
 FROM php:8.3-apache
 
-RUN a2enmod rewrite
+# Make sure only one Apache MPM is enabled
+RUN a2dismod mpm_event || true
+RUN a2enmod mpm_prefork rewrite
 
 RUN apt-get update && apt-get install -y \
     git \
@@ -11,6 +13,6 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install zip \
     && rm -rf /var/lib/apt/lists/*
 
-COPY . /var/www/html
+COPY . /var/www/html/
 
 EXPOSE 80
