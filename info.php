@@ -11,13 +11,12 @@ function check_extension($extension) {
     return extension_loaded($extension) ? '✔️' : '❌';
 }
 
-// Function to check if mod_rewrite is enabled
 function check_mod_rewrite() {
-    if (in_array('mod_rewrite', apache_get_modules())) {
-        return '✔️';
-    } else {
-        return '❌';
+    if (function_exists('apache_get_modules')) {
+        return in_array('mod_rewrite', apache_get_modules()) ? '✔️' : '❌';
     }
+
+    return 'N/A (Running PHP built-in server)';
 }
 
 
