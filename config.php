@@ -13,7 +13,7 @@ $GLOBALS['DEBUG'] = false; // Developer option.
 
 // Replace 'YOUR_API_KEY' with your TMDb API key - https://www.themoviedb.org/
 //Entering your key here may be visible through google drive. Check your sharing settings.
-$apiKey = '';
+$apiKey = 'ca3f479afaf378316966ec087a7c2af4';
 
 // Replace this with your Real-Debrid Private API token - https://real-debrid.com/apitoken
 // Don't worry about this setting if you aren't planning on using Real Debrid.
