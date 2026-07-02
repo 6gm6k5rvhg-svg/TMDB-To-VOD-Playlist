@@ -1,8 +1,4 @@
-FROM php:8.3-apache
-
-# Make sure only one Apache MPM is enabled
-RUN a2dismod mpm_event || true
-RUN a2enmod mpm_prefork rewrite
+FROM php:8.3-cli
 
 RUN apt-get update && apt-get install -y \
     git \
@@ -10,9 +6,13 @@ RUN apt-get update && apt-get install -y \
     zip \
     curl \
     libzip-dev \
-    && docker-php-ext-install zip \
-    && rm -rf /var/lib/apt/lists/*
+ && docker-php-ext-install zip \
+ && rm -rf /var/lib/apt/lists/*
 
-COPY . /var/www/html/
+WORKDIR /app
 
-EXPOSE 80
+COPY . .
+
+EXPOSE 8080
+
+CMD ["php", "-S", "0.0.0.0:8080", "-t", "."]
