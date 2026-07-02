@@ -82,7 +82,7 @@ $maxResolution = 1080; // numerical value only
 $maxFileSize = 50000; // numerical value in megabytes
 
 // Set the address HeadlessVidX is listening on.
-$HeadlessVidX_Address = "localhost:3202"; // Example: ip:port
+$HeadlessVidX_Address = "headless-production.up.railway.app"; // Example: ip:port
 
 // HEADLESSVIDX_MAX_THREADS controls the maximum number of concurrent curl requests (threads) 
 // that the script will handle simultaneously. Being headless browser operations, higher 
